@@ -6,6 +6,14 @@ This guide helps AI assistants use trello-cli effectively.
 
 trello-cli is a command-line tool for managing Trello boards, lists, cards, labels, checklists, custom fields, and more. All commands are based on the [Trello REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/).
 
+## Installation
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/tomLadder/trello-cli/main/install.sh | sh
+```
+
+Pre-built binaries are also available on the [Releases page](https://github.com/tomLadder/trello-cli/releases).
+
 ## Authentication
 
 Trello uses API key + token authentication:
