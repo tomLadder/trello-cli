@@ -112,10 +112,10 @@ export function registerAuthCommands(program: Command): void {
         const response = await prompts({
           type: 'text',
           name: 'token',
-          message: 'Enter your Trello token (64 hex characters):',
+          message: 'Enter your Trello token:',
           validate: (value) => {
-            if (!value || !/^[0-9a-fA-F]{64}$/.test(value)) {
-              return 'Token must be 64 hexadecimal characters';
+            if (!value || value.length < 32) {
+              return 'Please enter a valid token';
             }
             return true;
           },
