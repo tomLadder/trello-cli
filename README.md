@@ -31,21 +31,39 @@
 ## Features
 
 **Board Management**
-- List all your boards
-- Create, update, and archive boards
-- View board members and settings
+- List, create, update, and delete boards
+- View board lists, cards, members, labels, checklists, and custom fields
 
 **Card Management**
-- Create and update cards
+- Create, update, archive, and delete cards
 - Move cards between lists
-- Add labels, due dates, and attachments
+- Add/remove comments, attachments, members, and labels
+- Template card support
 
 **List Management**
-- Create and organize lists
-- Archive and restore lists
+- Create, update, and archive lists
+- Archive or move all cards in a list
+
+**Label Management**
+- Create, update, and delete labels on boards
+
+**Checklist Management**
+- Create, update, and delete checklists on cards
+- Add, update, and remove check items
+- Mark items complete/incomplete
+
+**Custom Fields**
+- Create and manage custom field definitions
+- Manage dropdown options for list-type fields
+- Set and clear custom field values on cards
+
+**Search**
+- Search across boards and cards
+- Search for members
 
 **Developer Experience**
 - JSON output for scripting and AI agents
+- LLMS.md guide for AI assistants
 - Beautiful terminal UI with spinners
 - Cross-platform compatibility
 
@@ -117,6 +135,8 @@ trello boards
 
 ## Commands
 
+All commands are based on the [Trello REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/). See the [full documentation](https://tomladder.github.io/trello-cli/) for detailed options and examples.
+
 ### Authentication
 
 | Command | Description |
@@ -125,6 +145,97 @@ trello boards
 | `trello logout` | Clear stored credentials |
 | `trello whoami` | Display current user info |
 | `trello status` | Check login status |
+
+### Boards
+
+| Command | Description |
+|---------|-------------|
+| `trello boards` | List your boards |
+| `trello boards get <id>` | Get board details |
+| `trello boards create <name>` | Create a new board |
+| `trello boards update <id>` | Update a board |
+| `trello boards delete <id>` | Delete a board |
+| `trello boards lists <id>` | List all lists on a board |
+| `trello boards cards <id>` | List all cards on a board |
+| `trello boards members <id>` | List all members of a board |
+| `trello boards labels <id>` | List all labels on a board |
+| `trello boards checklists <id>` | List all checklists on a board |
+| `trello boards custom-fields <id>` | List all custom fields on a board |
+
+### Lists
+
+| Command | Description |
+|---------|-------------|
+| `trello lists get <id>` | Get list details |
+| `trello lists create` | Create a new list |
+| `trello lists update <id>` | Update a list |
+| `trello lists cards <id>` | List cards in a list |
+| `trello lists archive-all-cards <id>` | Archive all cards in a list |
+| `trello lists move-all-cards <id>` | Move all cards to another list |
+
+### Cards
+
+| Command | Description |
+|---------|-------------|
+| `trello cards get <id>` | Get card details |
+| `trello cards create` | Create a new card |
+| `trello cards update <id>` | Update a card |
+| `trello cards delete <id>` | Delete a card |
+| `trello cards comments <id>` | List comments on a card |
+| `trello cards add-comment <id>` | Add a comment |
+| `trello cards update-comment <id> <commentId>` | Update a comment |
+| `trello cards delete-comment <id> <commentId>` | Delete a comment |
+| `trello cards attachments <id>` | List attachments |
+| `trello cards add-attachment <id>` | Add an attachment |
+| `trello cards delete-attachment <id> <attachmentId>` | Delete an attachment |
+| `trello cards members <id>` | List card members |
+| `trello cards add-member <id> <memberId>` | Add a member |
+| `trello cards remove-member <id> <memberId>` | Remove a member |
+| `trello cards add-label <id> <labelId>` | Add a label |
+| `trello cards remove-label <id> <labelId>` | Remove a label |
+
+### Labels
+
+| Command | Description |
+|---------|-------------|
+| `trello labels get <id>` | Get label details |
+| `trello labels create` | Create a new label |
+| `trello labels update <id>` | Update a label |
+| `trello labels delete <id>` | Delete a label |
+
+### Checklists
+
+| Command | Description |
+|---------|-------------|
+| `trello checklists get <id>` | Get checklist details |
+| `trello checklists create` | Create a new checklist |
+| `trello checklists update <id>` | Update a checklist |
+| `trello checklists delete <id>` | Delete a checklist |
+| `trello checklists items <id>` | List check items |
+| `trello checklists add-item <id>` | Add a check item |
+| `trello checklists remove-item <id> <itemId>` | Remove a check item |
+| `trello checklists update-item <cardId> <itemId>` | Update a check item |
+
+### Custom Fields
+
+| Command | Description |
+|---------|-------------|
+| `trello custom-fields get <id>` | Get field definition |
+| `trello custom-fields create` | Create a custom field |
+| `trello custom-fields update <id>` | Update a custom field |
+| `trello custom-fields delete <id>` | Delete a custom field |
+| `trello custom-fields options <id>` | List dropdown options |
+| `trello custom-fields add-option <id>` | Add a dropdown option |
+| `trello custom-fields delete-option <id> <optionId>` | Delete a dropdown option |
+| `trello custom-fields card-values <cardId>` | List values on a card |
+| `trello custom-fields set-value <cardId> <fieldId>` | Set a value on a card |
+
+### Search
+
+| Command | Description |
+|---------|-------------|
+| `trello search <query>` | Search boards and cards |
+| `trello search members <query>` | Search for members |
 
 ### Configuration
 
@@ -137,7 +248,7 @@ trello boards
 
 ### Global Options
 
-These options are available on all commands:
+All commands support:
 
 | Option | Description |
 |--------|-------------|
@@ -165,17 +276,23 @@ Configuration is stored in `~/.trello-cli/`:
 
 ## Scripting & Automation
 
-### JSON Output
-
 All commands support `--json` for machine-readable output:
 
 ```bash
 # Get user info as JSON
 trello whoami --json
 
-# Check status
-trello status --json
+# List boards as JSON
+trello boards --json
+
+# Create a card and get the ID
+trello cards create -n "New task" -l <listId> --json | jq -r '.id'
+
+# Search for cards
+trello search "bug" --type cards --json
 ```
+
+For AI agents, see [LLMS.md](LLMS.md) for a comprehensive guide.
 
 ---
 
@@ -183,16 +300,23 @@ trello status --json
 
 ```
 src/
-├── index.ts           # CLI entry point
+├── index.ts              # CLI entry point
 ├── api/
-│   ├── client.ts      # HTTP client with auth
-│   └── auth.ts        # Authentication
+│   ├── client.ts         # HTTP client with auth
+│   ├── auth.ts           # Authentication
+│   ├── boards.ts         # Board API
+│   ├── cards.ts          # Card API
+│   ├── checklists.ts     # Checklist API
+│   ├── customFields.ts   # Custom Fields API
+│   ├── labels.ts         # Label API
+│   ├── lists.ts          # List API
+│   └── search.ts         # Search API
 ├── cli/
-│   └── commands/      # Command implementations
+│   └── commands/         # Command implementations
 ├── store/
-│   └── config.ts      # Configuration management
+│   └── config.ts         # Configuration management
 └── types/
-    └── index.ts       # TypeScript interfaces
+    └── index.ts          # TypeScript interfaces
 ```
 
 ---
