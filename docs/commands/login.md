@@ -13,32 +13,50 @@ trello login [options]
 | Option | Description |
 |--------|-------------|
 | `-k, --api-key <key>` | Trello API key |
-| `-t, --token <token>` | Trello token |
+| `-t, --token <token>` | Trello API token |
 | `--json` | Output as JSON |
 
 ## Getting Credentials
 
-### Step 1: Get API Key
+### Step 1: Create a Power-Up and Get API Key
 
-Visit https://trello.com/app-key while logged into Trello.
+1. Go to [Trello Power-Ups Admin](https://trello.com/power-ups/admin/)
+2. Create a new Power-Up (or select an existing one)
+3. Navigate to **API Key** → **Generate a new API Key**
+4. Copy your API key
+
+::: tip Documentation
+For detailed instructions, see the [Trello REST API Introduction](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/)
+:::
 
 ### Step 2: Generate Token
 
-Click the "Token" link on the API key page, or use this URL format:
+After getting your API key, generate a token by opening this URL (replace `YOUR_API_KEY`):
 
 ```
 https://trello.com/1/authorize?expiration=never&scope=read,write&response_type=token&name=trello-cli&key=YOUR_API_KEY
 ```
 
+Click **Allow** and copy the token displayed.
+
 ## Interactive Login
 
 ```bash
 trello login
-# Get your API key from: https://trello.com/app-key
+
+# To get your API credentials:
+# ──────────────────────────────────────────────────
+# 1. Go to: https://trello.com/power-ups/admin/
+# 2. Create a new Power-Up (or select existing)
+# 3. Go to API Key → Generate a new API Key
+#
+# Documentation: https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/
 #
 # Enter your Trello API key: ********************************
 #
-# Authorize and get your token from:
+# Generate your API token:
+# ──────────────────────────────────────────────────
+# Open this URL and click "Allow":
 # https://trello.com/1/authorize?expiration=never&scope=read,write...
 #
 # Enter your Trello token: ********************************
@@ -49,7 +67,12 @@ trello login
 
 ## Non-Interactive Login
 
+For scripts and automation:
+
 ```bash
+trello login --api-key YOUR_KEY --token YOUR_TOKEN
+
+# Or with JSON output
 trello login --api-key YOUR_KEY --token YOUR_TOKEN --json
 # {"success":true,"user":{"id":"...","username":"...","fullName":"..."}}
 ```

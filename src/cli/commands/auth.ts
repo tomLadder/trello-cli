@@ -5,14 +5,15 @@ import prompts from 'prompts';
 import { login, logout, getMe } from '../../api/auth.ts';
 import { isLoggedIn, getAuth } from '../../store/config.ts';
 
-const TRELLO_API_KEY_URL = 'https://trello.com/app-key';
+const TRELLO_POWERUPS_URL = 'https://trello.com/power-ups/admin/';
+const TRELLO_API_DOCS_URL = 'https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/';
 
 export function registerAuthCommands(program: Command): void {
   program
     .command('login')
     .description('Login to Trello with API key and token')
     .option('-k, --api-key <key>', 'Trello API key')
-    .option('-t, --token <token>', 'Trello token')
+    .option('-t, --token <token>', 'Trello API token')
     .option('--json', 'Output as JSON')
     .action(async (options) => {
       const jsonOutput = options.json;
@@ -54,7 +55,14 @@ export function registerAuthCommands(program: Command): void {
           );
           return;
         }
-        console.log(chalk.cyan('Get your API key from:'), TRELLO_API_KEY_URL);
+        console.log();
+        console.log(chalk.bold('To get your API credentials:'));
+        console.log(chalk.gray('─'.repeat(50)));
+        console.log('1. Go to:', chalk.cyan(TRELLO_POWERUPS_URL));
+        console.log('2. Create a new Power-Up (or select existing)');
+        console.log('3. Go to API Key → Generate a new API Key');
+        console.log();
+        console.log(chalk.gray('Documentation:'), TRELLO_API_DOCS_URL);
         console.log();
         const response = await prompts({
           type: 'text',
@@ -85,8 +93,10 @@ export function registerAuthCommands(program: Command): void {
         }
         const tokenUrl = `https://trello.com/1/authorize?expiration=never&scope=read,write&response_type=token&name=trello-cli&key=${apiKey}`;
         console.log();
-        console.log(chalk.cyan('Authorize and get your token from:'));
-        console.log(tokenUrl);
+        console.log(chalk.bold('Generate your API token:'));
+        console.log(chalk.gray('─'.repeat(50)));
+        console.log('Open this URL and click "Allow":');
+        console.log(chalk.cyan(tokenUrl));
         console.log();
         const response = await prompts({
           type: 'text',

@@ -94,8 +94,11 @@ bun run dev -- --help
 
 ### 1. Get your API credentials
 
-1. Go to https://trello.com/app-key to get your API key
-2. Click the link to generate a token
+1. Go to https://trello.com/power-ups/admin/ and create a Power-Up
+2. Navigate to API Key → Generate a new API Key
+3. Generate a token using the authorization URL
+
+See [Trello API documentation](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/) for details.
 
 ### 2. Login to your account
 
@@ -212,10 +215,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 <details>
 <summary><strong>How do I get my API key and token?</strong></summary>
 
-1. Visit https://trello.com/app-key while logged into Trello
-2. Copy your API key
-3. Click the "Token" link to generate a token with read/write access
-4. Use both when running `trello login`
+1. Visit https://trello.com/power-ups/admin/ and create a Power-Up
+2. Go to API Key → Generate a new API Key
+3. Copy your API key
+4. Generate a token by visiting the authorization URL shown during `trello login`
+5. See [Trello API docs](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/) for more details
 </details>
 
 <details>

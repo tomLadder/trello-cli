@@ -19,8 +19,11 @@ mv dist/trello /usr/local/bin/
 
 ### 2. Get API Credentials
 
-1. Go to https://trello.com/app-key to get your API key
-2. Click the token link to generate a token
+1. Go to [Trello Power-Ups Admin](https://trello.com/power-ups/admin/)
+2. Create a new Power-Up (or select existing)
+3. Navigate to **API Key** → **Generate a new API Key**
+
+See the [Trello API documentation](https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/) for more details.
 
 ### 3. Login
 
