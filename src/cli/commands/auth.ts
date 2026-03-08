@@ -48,6 +48,17 @@ export function registerAuthCommands(program: Command): void {
 
       // Get API key
       let apiKey = options.apiKey;
+      if (apiKey && !/^[0-9a-fA-F]{32}$/.test(apiKey)) {
+        if (jsonOutput) {
+          console.log(
+            JSON.stringify({ success: false, error: 'API key must be 32 hexadecimal characters' })
+          );
+        } else {
+          console.log(chalk.red('Error:'), 'API key must be 32 hexadecimal characters');
+          console.log(chalk.gray('Example: 0471642aefef5fa1fa76530ce1ba4c85'));
+        }
+        return;
+      }
       if (!apiKey) {
         if (jsonOutput) {
           console.log(
@@ -67,10 +78,10 @@ export function registerAuthCommands(program: Command): void {
         const response = await prompts({
           type: 'text',
           name: 'apiKey',
-          message: 'Enter your Trello API key:',
+          message: 'Enter your Trello API key (32 hex characters):',
           validate: (value) => {
-            if (!value || value.length < 10) {
-              return 'Please enter a valid API key';
+            if (!value || !/^[0-9a-fA-F]{32}$/.test(value)) {
+              return 'API key must be 32 hexadecimal characters (e.g., 0471642aefef5fa1fa76530ce1ba4c85)';
             }
             return true;
           },
@@ -101,10 +112,10 @@ export function registerAuthCommands(program: Command): void {
         const response = await prompts({
           type: 'text',
           name: 'token',
-          message: 'Enter your Trello token:',
+          message: 'Enter your Trello token (64 hex characters):',
           validate: (value) => {
-            if (!value || value.length < 10) {
-              return 'Please enter a valid token';
+            if (!value || !/^[0-9a-fA-F]{64}$/.test(value)) {
+              return 'Token must be 64 hexadecimal characters';
             }
             return true;
           },
