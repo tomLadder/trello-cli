@@ -1,7 +1,7 @@
 <h1 align="center">📋 trello-cli</h1>
 
 <p align="center">
-  <strong>The unofficial command-line interface for Trello</strong>
+  <strong>The command-line interface for Trello</strong>
 </p>
 
 <p align="center">
@@ -25,13 +25,6 @@
   <img src="https://img.shields.io/badge/TypeScript-5.4-blue.svg" alt="TypeScript">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg" alt="Platform">
 </p>
-
----
-
-> [!CAUTION]
-> **Legal Disclaimer / Rechtlicher Hinweis**
->
-> This is an **unofficial** tool and is **not affiliated** with Trello or Atlassian. Using this program may violate Trello's terms of service. You are solely responsible for ensuring your use complies with applicable terms and laws. The developers accept no liability for any damages or legal consequences arising from its use. **Use at your own risk.**
 
 ---
 
