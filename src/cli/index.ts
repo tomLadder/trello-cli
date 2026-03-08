@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 import { registerAuthCommands } from './commands/auth.ts';
+import { registerBoardCommands } from './commands/boards.ts';
 import { registerConfigCommands } from './commands/config.ts';
 
 export function createCLI(): Command {
@@ -12,6 +13,7 @@ export function createCLI(): Command {
 
   // Register all command groups
   registerAuthCommands(program);
+  registerBoardCommands(program);
   registerConfigCommands(program);
 
   return program;

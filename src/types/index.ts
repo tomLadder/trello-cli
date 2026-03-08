@@ -30,6 +30,8 @@ export interface TrelloBoard {
   desc: string;
   closed: boolean;
   url: string;
+  shortUrl?: string;
+  idOrganization?: string;
 }
 
 export interface TrelloList {
