@@ -1,6 +1,6 @@
 # Getting Started
 
-trello-cli is an unofficial command-line interface for managing your Trello boards.
+trello-cli is a command-line interface for managing your Trello boards.
 
 ## Quick Start
 

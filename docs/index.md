@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: 📋 trello-cli
-  text: Unofficial CLI for Trello
+  text: CLI for Trello
   tagline: Manage your boards from the terminal
   actions:
     - theme: brand

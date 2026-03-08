@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'trello-cli',
-  description: 'Unofficial CLI for Trello - Manage your boards from the terminal',
+  description: 'CLI for Trello - Manage your boards from the terminal',
 
   base: '/trello-cli/',
 
@@ -38,6 +38,13 @@ export default defineConfig({
             { text: 'logout', link: '/commands/logout' },
             { text: 'whoami', link: '/commands/whoami' },
             { text: 'status', link: '/commands/status' },
+            { text: 'boards', link: '/commands/boards' },
+            { text: 'lists', link: '/commands/lists' },
+            { text: 'cards', link: '/commands/cards' },
+            { text: 'labels', link: '/commands/labels' },
+            { text: 'checklists', link: '/commands/checklists' },
+            { text: 'custom-fields', link: '/commands/custom-fields' },
+            { text: 'search', link: '/commands/search' },
             { text: 'config', link: '/commands/config' },
           ]
         }
@@ -49,7 +56,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Released under the MIT License. Not affiliated with Trello or Atlassian.',
+      message: 'Released under the MIT License.',
       copyright: 'Made with ❤️ in Austria'
     },
 
