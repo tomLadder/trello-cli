@@ -2,12 +2,14 @@ import { get, post, put, del } from './client.ts';
 import type { ApiResult, TrelloCard, TrelloComment, TrelloAttachment, TrelloUser } from '../types/index.ts';
 
 export interface CreateCardOptions {
-  name: string;
+  name?: string;
   idList: string;
   desc?: string;
   due?: string;
   idLabels?: string;
   idMembers?: string;
+  idCardSource?: string;
+  keepFromSource?: string;
 }
 
 export interface UpdateCardOptions {
@@ -26,12 +28,14 @@ export async function getCard(cardId: string): Promise<ApiResult<TrelloCard>> {
 
 export async function createCard(options: CreateCardOptions): Promise<ApiResult<TrelloCard>> {
   const params = new URLSearchParams();
-  params.set('name', options.name);
+  if (options.name !== undefined) params.set('name', options.name);
   params.set('idList', options.idList);
   if (options.desc !== undefined) params.set('desc', options.desc);
   if (options.due !== undefined) params.set('due', options.due);
   if (options.idLabels !== undefined) params.set('idLabels', options.idLabels);
   if (options.idMembers !== undefined) params.set('idMembers', options.idMembers);
+  if (options.idCardSource !== undefined) params.set('idCardSource', options.idCardSource);
+  if (options.keepFromSource !== undefined) params.set('keepFromSource', options.keepFromSource);
   return post<TrelloCard>(`/cards?${params.toString()}`);
 }
 

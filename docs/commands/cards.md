@@ -34,12 +34,14 @@ trello cards create [options]
 
 | Option | Description |
 |--------|-------------|
-| `-n, --name <name>` | Card name (required) |
+| `-n, --name <name>` | Card name (required unless `--idCardSource` is used) |
 | `-l, --list <listId>` | List ID to create the card in (required) |
 | `-d, --desc <description>` | Card description |
 | `--due <date>` | Due date (ISO 8601 format) |
 | `--labels <labelIds>` | Comma-separated label IDs |
 | `--members <memberIds>` | Comma-separated member IDs |
+| `--idCardSource <cardId>` | Source card ID to copy from |
+| `--keepFromSource <properties>` | Comma-separated properties to keep from source (attachments, checklists, comments, due, labels, members, stickers) |
 | `--json` | Output as JSON |
 
 ### Examples
@@ -55,6 +57,15 @@ trello cards create -n "Release v2.0" -l 60d5ecb2a1b2c30a12345678 \
 # Create a card with labels and members
 trello cards create -n "Review PR" -l 60d5ecb2a1b2c30a12345678 \
   --labels "labelId1,labelId2" --members "memberId1"
+
+# Copy a card to a list
+trello cards create -l 60d5ecb2a1b2c30a12345678 \
+  --idCardSource 60d5ecb2a1b2c30a87654321
+
+# Copy a card, keeping checklists and labels, with a new name
+trello cards create -n "Copy of task" -l 60d5ecb2a1b2c30a12345678 \
+  --idCardSource 60d5ecb2a1b2c30a87654321 \
+  --keepFromSource "checklists,labels,members"
 ```
 
 ## Update Card

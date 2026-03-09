@@ -84,12 +84,14 @@ export function registerCardCommands(program: Command): void {
   cards
     .command('create')
     .description('Create a new card')
-    .requiredOption('-n, --name <name>', 'Card name')
+    .option('-n, --name <name>', 'Card name (required unless --idCardSource is used)')
     .requiredOption('-l, --list <listId>', 'List ID to add the card to')
     .option('-d, --desc <description>', 'Card description')
     .option('--due <date>', 'Due date')
     .option('--labels <labelIds>', 'Comma-separated label IDs')
     .option('--members <memberIds>', 'Comma-separated member IDs')
+    .option('--idCardSource <cardId>', 'Source card ID to copy from')
+    .option('--keepFromSource <properties>', 'Comma-separated properties to keep from source (e.g. attachments,checklists,comments,due,labels,members,stickers)')
     .option('--json', 'Output as JSON')
     .action(async (options) => {
       if (!(await isLoggedIn())) {
@@ -97,7 +99,12 @@ export function registerCardCommands(program: Command): void {
         return;
       }
 
-      const spinner = options.json ? null : ora('Creating card...').start();
+      if (!options.name && !options.idCardSource) {
+        console.log(chalk.red('Error: --name is required unless --idCardSource is provided.'));
+        return;
+      }
+
+      const spinner = options.json ? null : ora(options.idCardSource ? 'Copying card...' : 'Creating card...').start();
       const result = await createCard({
         name: options.name,
         idList: options.list,
@@ -105,6 +112,8 @@ export function registerCardCommands(program: Command): void {
         due: options.due,
         idLabels: options.labels,
         idMembers: options.members,
+        idCardSource: options.idCardSource,
+        keepFromSource: options.keepFromSource,
       });
 
       if (!result.success || !result.data) {
@@ -117,7 +126,7 @@ export function registerCardCommands(program: Command): void {
         return;
       }
 
-      spinner?.succeed('Card created');
+      spinner?.succeed(options.idCardSource ? 'Card copied' : 'Card created');
 
       if (options.json) {
         console.log(JSON.stringify(result.data, null, 2));
