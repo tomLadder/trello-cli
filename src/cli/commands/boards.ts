@@ -8,6 +8,8 @@ export function registerBoardCommands(program: Command): void {
   const boards = program
     .command('boards')
     .description('List your Trello boards')
+    .enablePositionalOptions()
+    .passThroughOptions()
     .option('-f, --filter <filter>', 'Filter boards: all, open, closed, starred', 'all')
     .option('--json', 'Output as JSON')
     .action(async (options) => {

@@ -15,7 +15,8 @@ export function createCLI(): Command {
   program
     .name('trello')
     .description('CLI for managing your Trello boards from the terminal')
-    .version('0.0.1');
+    .version('0.0.2')
+    .enablePositionalOptions();
 
   // Register all command groups
   registerAuthCommands(program);
