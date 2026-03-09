@@ -438,17 +438,24 @@ export function registerCustomFieldCommands(program: Command): void {
       let value: Record<string, unknown>;
 
       if (options.clear) {
-        value = { value: {} };
+        value = { clear: true };
       } else if (options.option) {
         value = { idValue: options.option };
       } else if (options.text !== undefined) {
-        value = { value: { text: options.text } };
+        value = { text: options.text };
       } else if (options.number !== undefined) {
-        value = { value: { number: options.number } };
+        value = { number: options.number };
       } else if (options.checkbox !== undefined) {
-        value = { value: { checked: options.checkbox } };
+        value = { checked: options.checkbox };
       } else if (options.date !== undefined) {
-        value = { value: { date: options.date } };
+        // Normalize to full ISO 8601 format if only a date was provided
+        const dateStr = options.date;
+        const parsed = new Date(dateStr);
+        if (isNaN(parsed.getTime())) {
+          console.log(chalk.red('Invalid date format. Use ISO 8601 format, e.g. 2026-04-01'));
+          return;
+        }
+        value = { date: parsed.toISOString() };
       } else {
         console.log(chalk.yellow('No value option provided. Use --text, --number, --checkbox, --date, --option, or --clear.'));
         return;

@@ -81,11 +81,13 @@ export async function getCardCustomFieldItems(cardId: string): Promise<ApiResult
 export async function setCardCustomFieldValue(
   cardId: string,
   customFieldId: string,
-  value: { text?: string; number?: string; checked?: string; date?: string } | { idValue: string }
+  value: { text?: string; number?: string; checked?: string; date?: string; clear?: boolean } | { idValue: string }
 ): Promise<ApiResult<TrelloCustomFieldItem>> {
   let body: object;
   if ('idValue' in value) {
     body = { idValue: value.idValue };
+  } else if ('clear' in value && value.clear) {
+    body = { value: '' };
   } else {
     body = { value };
   }
